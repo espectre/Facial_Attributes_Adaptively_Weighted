@@ -73,8 +73,11 @@ def validation():
         global count
         count += 1
         if count >= 2*kk and count % kk == 0:
+            # pre_val_mean 前面100个batch的loss均值
+            # cur_val_mean 当前100个batch的loss均值
             pre_val_mean = np.mean(val_loss[(count-2*kk):(count-kk)], axis=0)
             cur_val_mean = np.mean(val_loss[(count-kk):count], axis=0)
+            # trend loss的变化趋势
             trend = np.abs(cur_val_mean - pre_val_mean) / cur_val_mean
             norm_trend = trend / np.mean(trend)
             norm_loss = cur_val_mean / np.mean(cur_val_mean)
